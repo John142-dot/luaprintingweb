@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lua Executor</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/fengari/0.1.4/fengari.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fengari/0.1.4/fengari-web.min.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -53,10 +53,15 @@
       
       try {
         // Use Fengari to run the Lua code
-        let luaOutput = fengari.load(luaCode)(); // Execute Lua code
-
-        // Show the output
-        outputElement.innerHTML = "<strong>Output:</strong><pre>" + luaOutput + "</pre>";
+        const L = fengari.L;
+        const la = fengari.lua;
+        
+        // Load and run Lua code
+        fengari.load(luaCode)(L);
+        
+        // Capture the result from Lua (using fengari's API)
+        const result = la.tojs(L, -1); // Lua result is on top of the stack
+        outputElement.innerHTML = "<strong>Output:</strong><pre>" + result + "</pre>";
       } catch (e) {
         // Handle any errors that occur during execution
         outputElement.innerHTML = "<strong>Error:</strong><pre>" + e.message + "</pre>";
