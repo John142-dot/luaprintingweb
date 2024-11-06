@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lua Executor</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fengari/0.1.4/fengari.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f0f0f0;
+    }
+    textarea {
+      width: 100%;
+      height: 200px;
+      margin-bottom: 10px;
+      font-family: monospace;
+      font-size: 14px;
+    }
+    button {
+      padding: 10px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    #output {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #f4f4f4;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Lua Executor</h1>
+  <textarea id="luaInput" placeholder="Enter your Lua code here..."></textarea>
+  <br>
+  <button onclick="runLua()">Run Lua Code</button>
+
+  <div id="output"></div>
+
+  <script>
+    function runLua() {
+      const luaCode = document.getElementById("luaInput").value;
+      const outputElement = document.getElementById("output");
+      
+      try {
+        // Use Fengari to run the Lua code
+        let luaOutput = fengari.load(luaCode)(); // Execute Lua code
+
+        // Show the output
+        outputElement.innerHTML = "<strong>Output:</strong><pre>" + luaOutput + "</pre>";
+      } catch (e) {
+        // Handle any errors that occur during execution
+        outputElement.innerHTML = "<strong>Error:</strong><pre>" + e.message + "</pre>";
+      }
+    }
+  </script>
+
+</body>
+</html>
